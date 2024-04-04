@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Text Analyser</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Analyse</button>
+</form>
+<div class="mb-5">
+    {% if result.sentiment %}
+    <h2>Sentiment Analysis</h2>
+    <p>Sentiment: {{ result.sentiment.sentiment }}</p>
+    <p>Score: {{ result.sentiment.compound }}</p>
+    {% endif %}
+    {% if result.emotion %}
+    <h2>Emotion Analysis</h2>
+    <p>Emotion: {{ result.emotion.emotion }}</p>
+    <p>Score: {{ result.emotion.score }}</p>
+    {% endif %}
+    {% if result.passion %}
+    <h2>Passion Analysis</h2>
+    <ul>
+        {% for passion in result.passion %}
+        <li>Passion: {{ passion.passions|join:" & " }}</li>
+        <li>Score: {{ passion.score }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if result.hate %}
+    <h2>Hate Speech Analysis</h2>
+    <p>Label: {{ result.hate.label }}</p>
+    <p>Score: {{ result.hate.score }}</p>
+    {% endif %}
+    {% if result.label %}
+    <h2>Profanity Analysis</h2>
+    <p>Label: {{ result.label }}</p>
+    {% endif %}
+</div>
+{% endblock %}

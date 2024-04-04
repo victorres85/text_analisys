@@ -1,0 +1,2 @@
+ipython==8.20.0
+pytest==8.1.1
